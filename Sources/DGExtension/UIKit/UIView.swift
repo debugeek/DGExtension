@@ -8,27 +8,69 @@
 
 import UIKit
 
-public let pixelLength = 1.0/UIScreen.main.scale
+public extension UIView {
+    
+    var top: CGFloat {
+        set {
+            frame.origin.y = newValue
+        } get {
+            return frame.origin.y
+        }
+    }
+    
+    var left: CGFloat {
+        set {
+            frame.origin.x = newValue
+        } get {
+            return frame.origin.x
+        }
+    }
+    
+    var bottom: CGFloat {
+        set {
+            frame.origin.y = newValue - frame.size.height
+        } get {
+            return frame.origin.y + frame.size.height
+        }
+    }
 
-extension UIView {
+    var right: CGFloat {
+        set {
+            frame.origin.x = newValue - frame.size.width
+        } get {
+            return frame.origin.x + frame.size.width
+        }
+    }
+
+    var centerX: CGFloat {
+        set {
+            center.x = newValue
+        } get {
+            return center.x
+        }
+    }
+
+    var centerY: CGFloat {
+        set {
+            center.y = newValue
+        } get {
+            return center.y
+        }
+    }
     
     var width: CGFloat {
         set {
-            var frame = self.frame
             frame.size.width = newValue
-            self.frame = frame
         } get {
-            return bounds.size.width
+            return frame.size.width
         }
     }
     
     var height: CGFloat {
         set {
-            var frame = self.frame
             frame.size.height = newValue
-            self.frame = frame
         } get {
-            return bounds.size.height
+            return frame.size.height
         }
     }
     
