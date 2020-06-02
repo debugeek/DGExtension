@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "swiftRuntime",
+        "repositoryURL": "https://github.com/debugeek/swiftRuntime.git",
+        "state": {
+          "branch": null,
+          "revision": "4181d39922864c3032ff82b55de0872642e0260f",
+          "version": "0.0.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
