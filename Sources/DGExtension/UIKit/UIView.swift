@@ -78,7 +78,7 @@ public extension UIView {
 
 extension UIView {
     
-    public func foreachSubview(recursively: Bool, handler: ((_ subview: NSView, _ stop: inout Bool) -> ())) {
+    public func foreachSubview(recursively: Bool, handler: ((_ subview: UIView, _ stop: inout Bool) -> ())) {
         for subview in subviews {
             var stop = false
             handler(subview, &stop)
