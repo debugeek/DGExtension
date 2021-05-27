@@ -78,12 +78,15 @@ public extension UIView {
 
 extension UIView {
     
-    public func foreachSubview(recursively: Bool, handler:((UIView) -> (Bool))) {
+    public func foreachSubview(recursively: Bool, handler: ((_ subview: NSView, _ stop: inout Bool) -> ())) {
         for subview in subviews {
-            if !handler(subview) {
+            var stop = false
+            handler(subview, &stop)
+
+            if stop {
                 break
             }
-            
+
             if recursively {
                 subview.foreachSubview(recursively: recursively, handler: handler)
             }
