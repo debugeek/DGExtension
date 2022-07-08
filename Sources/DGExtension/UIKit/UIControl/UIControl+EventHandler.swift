@@ -13,21 +13,19 @@ import UIKit
 public extension UIControl {
     
     class UIControlEventHandlerToken: NSObject {
-        private var event: UIControl.Event
+        private let event: UIControl.Event
+        private let handler: (UIControl) -> Void
         private weak var control: UIControl?
-        private var handler: (UIControl) -> Void
         
-        private struct AssociatedKeys {
-            static var eventHandlerToken: UInt8 = 0
-        }
+        static var tokenKey: UInt8 = 0
         
-        fileprivate init(event: UIControl.Event, control: UIControl, handler: @escaping (UIControl) -> Void) {
+        init(event: UIControl.Event, control: UIControl, handler: @escaping (UIControl) -> Void) {
             self.event = event
             self.control = control
             self.handler = handler
         }
         
-        @objc fileprivate func invoke(_ control: UIControl) {
+        @objc func invoke(_ control: UIControl) {
             handler(control)
         }
         
@@ -35,16 +33,16 @@ public extension UIControl {
             guard let control = control else {
                 return
             }
-            control.addTarget(self, action: #selector(Self.invoke(_:)), for: event)
-            objc_setAssociatedObject(control, &AssociatedKeys.eventHandlerToken, self, .OBJC_ASSOCIATION_RETAIN)
+            control.addTarget(self, action: #selector(invoke(_:)), for: event)
+            objc_setAssociatedObject(control, &Self.tokenKey, self, .OBJC_ASSOCIATION_RETAIN)
         }
         
         @objc public func disable() {
             guard let control = control else {
                 return
             }
-            control.removeTarget(self, action: #selector(Self.invoke(_:)), for: event)
-            objc_setAssociatedObject(control, &AssociatedKeys.eventHandlerToken, nil, .OBJC_ASSOCIATION_RETAIN)
+            control.removeTarget(self, action: #selector(invoke(_:)), for: event)
+            objc_setAssociatedObject(control, &Self.tokenKey, nil, .OBJC_ASSOCIATION_RETAIN)
         }
     }
     
