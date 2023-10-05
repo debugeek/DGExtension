@@ -12,33 +12,34 @@ import UIKit
 
 public extension UIColor {
 
-    @objc class func color(withHexString hexString: String) -> UIColor? {
-        var hexString = hexString.lowercased()
-        if hexString.hasPrefix("0x") {
-            hexString = hexString.replacingOccurrences(of: "0x", with: "")
-        } else if hexString.hasPrefix("#") {
-            hexString = hexString.replacingOccurrences(of: "#", with: "")
+    @objc convenience init?(hex: String) {
+        var hex = hex.lowercased()
+        if hex.hasPrefix("0x") {
+            hex = hex.replacingOccurrences(of: "0x", with: "")
+        } else if hex.hasPrefix("#") {
+            hex = hex.replacingOccurrences(of: "#", with: "")
         }
+        let digits = hex.count
 
-        guard let hex = UInt32(hexString, radix: 16) else {
+        guard let hex = UInt32(hex, radix: 16) else {
             return nil
         }
         
-        switch hexString.count {
+        switch digits {
         case 6:
-            return UIColor.color(withHex: hex, alpha: 1)
+            self.init(hex: hex, alpha: 1)
         case 8:
-            return UIColor.color(withHex: (hex >> 8) & 0xffffff, alpha: CGFloat(hex & 0xff)/255)
+            self.init(hex: (hex >> 8) & 0xffffff, alpha: CGFloat(hex & 0xff)/255)
         default:
             return nil
         }
     }
 
-    @objc class func color(withHex hex: UInt32, alpha: CGFloat = 1) -> UIColor? {
+    @objc convenience init?(hex: UInt32, alpha: CGFloat = 1) {
         let red = (hex >> 16) & 0xff
         let green = (hex >> 8) & 0xff
         let blue = hex & 0xff
-        return UIColor(red: CGFloat(red)/255, green: CGFloat(green)/255, blue: CGFloat(blue)/255, alpha: alpha)
+        self.init(red: CGFloat(red)/255, green: CGFloat(green)/255, blue: CGFloat(blue)/255, alpha: alpha)
     }
     
 }
