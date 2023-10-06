@@ -12,14 +12,18 @@ import UIKit
 
 public extension UIImage {
     
-    @objc class func image(withColor color: UIColor, size: CGSize) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+    @objc convenience init?(color: UIColor, size: CGSize) {
+        UIGraphicsBeginImageContext(size)
         defer { UIGraphicsEndImageContext() }
 
-        color.setFill()
-        UIRectFill(CGRect(origin: .zero, size: size))
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
 
-        return UIGraphicsGetImageFromCurrentImageContext() ?? .init()
+        context.setFillColor(color.cgColor)
+        context.fill(CGRect(origin: .zero, size: size))
+
+        guard let cgImage = context.makeImage() else { return nil }
+
+        self.init(cgImage: cgImage)
     }
     
 }
