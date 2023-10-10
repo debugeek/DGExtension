@@ -8,9 +8,9 @@
 
 extension BidirectionalCollection where Iterator.Element: Equatable {
 
-    typealias Element = Self.Iterator.Element
+    public typealias Element = Self.Iterator.Element
 
-    func next(of item: Element) -> Element? {
+    public func next(of item: Element) -> Element? {
         guard let index = self.firstIndex(of: item),
               self.distance(from: index, to: self.endIndex) > 1 else {
             return nil
@@ -18,7 +18,7 @@ extension BidirectionalCollection where Iterator.Element: Equatable {
         return self[self.index(after: index)]
     }
 
-    func previous(of item: Element) -> Element? {
+    public func previous(of item: Element) -> Element? {
         guard let index = self.firstIndex(of: item),
               self.distance(from: self.startIndex, to: index) > 0 else {
             return nil
