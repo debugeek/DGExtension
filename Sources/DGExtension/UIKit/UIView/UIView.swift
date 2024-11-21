@@ -12,42 +12,42 @@ import UIKit
 
 public extension UIView {
     
-    @objc var top: CGFloat {
+    var top: CGFloat {
         set { frame.origin.y = newValue }
         get { frame.origin.y }
     }
     
-    @objc var left: CGFloat {
+    var left: CGFloat {
         set { frame.origin.x = newValue }
         get { frame.origin.x }
     }
     
-    @objc var bottom: CGFloat {
+    var bottom: CGFloat {
         set { frame.origin.y = newValue - frame.size.height }
         get { frame.origin.y + frame.size.height }
     }
 
-    @objc var right: CGFloat {
+    var right: CGFloat {
         set { frame.origin.x = newValue - frame.size.width }
         get { frame.origin.x + frame.size.width }
     }
 
-    @objc var centerX: CGFloat {
+    var centerX: CGFloat {
         set { center.x = newValue }
         get { center.x }
     }
 
-    @objc var centerY: CGFloat {
+    var centerY: CGFloat {
         set { center.y = newValue }
         get { center.y }
     }
     
-    @objc var width: CGFloat {
+    var width: CGFloat {
         set { frame.size.width = newValue }
         get { frame.size.width }
     }
     
-    @objc var height: CGFloat {
+    var height: CGFloat {
         set { frame.size.height = newValue }
         get { frame.size.height }
     }
@@ -55,25 +55,19 @@ public extension UIView {
 }
 
 public extension UIView {
-    
-    @discardableResult
-    @objc(enumerateSubviewsRecursively:usingBlock:)
-    func enumerateSubviews(recursively: Bool, using block: (UIView, UnsafeMutablePointer<Bool>) -> Void) -> Bool {
+
+    func enumerateSubviews(recursively: Bool, using block: (UIView, inout Bool) -> Void) {
         for subview in subviews {
             var stop: Bool = false
             block(subview, &stop)
             if stop {
-                return false
+                return
             }
 
             if recursively {
-                if !subview.enumerateSubviews(recursively: recursively, using: block) {
-                    return false
-                }
+                subview.enumerateSubviews(recursively: recursively, using: block)
             }
         }
-        
-        return true
     }
     
 }

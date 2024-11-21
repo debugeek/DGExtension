@@ -12,7 +12,7 @@ import UIKit
 
 public extension UIImage {
     
-    @objc convenience init?(color: UIColor, size: CGSize) {
+    convenience init?(color: UIColor, size: CGSize) {
         UIGraphicsBeginImageContext(size)
         defer { UIGraphicsEndImageContext() }
 

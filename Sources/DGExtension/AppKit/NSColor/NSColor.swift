@@ -12,7 +12,7 @@ import AppKit
 
 public extension NSColor {
     
-    @objc convenience init?(hex: String) {
+    convenience init?(hex: String) {
         var hex = hex.lowercased()
         if hex.hasPrefix("0x") {
             hex = hex.replacingOccurrences(of: "0x", with: "")
@@ -35,7 +35,7 @@ public extension NSColor {
         }
     }
 
-    @objc convenience init?(hex: UInt32, alpha: CGFloat = 1) {
+    convenience init(hex: UInt32, alpha: CGFloat = 1) {
         let red = (hex >> 16) & 0xff
         let green = (hex >> 8) & 0xff
         let blue = hex & 0xff

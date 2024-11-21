@@ -14,28 +14,28 @@ public extension UIBarButtonItem {
 
     static var actionBlockKey: UInt = 0
     
-    @objc convenience init(title: String?, style: UIBarButtonItem.Style, actionBlock: @escaping (UIBarButtonItem) -> Void) {
+    convenience init(title: String?, style: UIBarButtonItem.Style, actionBlock: @escaping (UIBarButtonItem) -> Void) {
         self.init(title: title, style: style, target: nil, action: nil)
         target = self
         action = #selector(invoke)
         objc_setAssociatedObject(self, &Self.actionBlockKey, actionBlock, .OBJC_ASSOCIATION_RETAIN)
     }
     
-    @objc convenience init(image: UIImage?, style: UIBarButtonItem.Style, actionBlock: @escaping (UIBarButtonItem) -> Void) {
+    convenience init(image: UIImage?, style: UIBarButtonItem.Style, actionBlock: @escaping (UIBarButtonItem) -> Void) {
         self.init(image: image, style: style, target: nil, action: nil)
         target = self
         action = #selector(invoke)
         objc_setAssociatedObject(self, &Self.actionBlockKey, actionBlock, .OBJC_ASSOCIATION_RETAIN)
     }
     
-    @objc convenience init(barButtonSystemItem systemItem: UIBarButtonItem.SystemItem, actionBlock: @escaping (UIBarButtonItem) -> Void) {
+    convenience init(barButtonSystemItem systemItem: UIBarButtonItem.SystemItem, actionBlock: @escaping (UIBarButtonItem) -> Void) {
         self.init(barButtonSystemItem: systemItem, target: nil, action: nil)
         target = self
         action = #selector(invoke)
         objc_setAssociatedObject(self, &Self.actionBlockKey, actionBlock, .OBJC_ASSOCIATION_RETAIN)
     }
     
-    @objc convenience init(image: UIImage?, landscapeImagePhone: UIImage?, style: UIBarButtonItem.Style, actionBlock: @escaping (UIBarButtonItem) -> Void) {
+    convenience init(image: UIImage?, landscapeImagePhone: UIImage?, style: UIBarButtonItem.Style, actionBlock: @escaping (UIBarButtonItem) -> Void) {
         self.init(image: image, landscapeImagePhone: landscapeImagePhone, style: style, target: nil, action: nil)
         target = self
         action = #selector(invoke)

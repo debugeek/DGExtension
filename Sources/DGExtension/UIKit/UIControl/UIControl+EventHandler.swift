@@ -29,7 +29,7 @@ public extension UIControl {
             handler(control)
         }
         
-        @objc public func enable() {
+        public func enable() {
             guard let control = control else {
                 return
             }
@@ -37,7 +37,7 @@ public extension UIControl {
             objc_setAssociatedObject(control, &Self.tokenKey, self, .OBJC_ASSOCIATION_RETAIN)
         }
         
-        @objc public func disable() {
+        public func disable() {
             guard let control = control else {
                 return
             }
@@ -47,7 +47,6 @@ public extension UIControl {
     }
     
     @discardableResult
-    @objc(addEventHandler:forControlEvents:)
     func addEventHandler(_ handler: @escaping (UIControl) -> Void, for controlEvents: UIControl.Event) -> UIControlEventHandlerToken {
         let token = UIControlEventHandlerToken(event: controlEvents, control: self, handler: handler)
         token.enable()
